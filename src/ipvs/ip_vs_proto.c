@@ -31,8 +31,7 @@ static struct dp_vs_proto *dp_vs_protocols[DPVS_MAX_PROTOS];
 static int proto_register(struct dp_vs_proto *proto)
 {
     /* sanity check */
-    if (!proto->name || proto->proto >= DPVS_MAX_PROTOS
-            || !proto->conn_sched || !proto->conn_lookup)
+    if (!proto->name || !proto->conn_sched || !proto->conn_lookup)
         return EDPVS_INVAL;
 
     if (dp_vs_protocols[proto->proto])
@@ -48,7 +47,7 @@ static int proto_register(struct dp_vs_proto *proto)
 
 static int proto_unregister(struct dp_vs_proto *proto)
 {
-    assert(proto && proto->proto < DPVS_MAX_PROTOS);
+    assert(proto);
 
     if (!dp_vs_protocols[proto->proto])
         return EDPVS_NOTEXIST;
@@ -63,8 +62,6 @@ static int proto_unregister(struct dp_vs_proto *proto)
 
 struct dp_vs_proto *dp_vs_proto_lookup(uint8_t proto)
 {
-    assert(proto < DPVS_MAX_PROTOS);
-
     /* NULL if protocol is not registered */
     return dp_vs_protocols[proto];
 }

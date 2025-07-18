@@ -2146,7 +2146,6 @@ static inline void netif_tx_burst(lcoreid_t cid, portid_t pid, queueid_t qindex)
     struct rte_mbuf *mbuf_copied = NULL;
     struct netif_port *dev = NULL;
 
-    assert(LCORE_ID_ANY != cid);
     txq = &lcore_conf[lcore2index[cid]].pqs[port2index[cid][pid]].txqs[qindex];
     if (0 == txq->len)
         return;
@@ -2638,7 +2637,6 @@ static void lcore_job_recv_fwd(void *arg)
     struct netif_queue_conf *qconf;
 
     cid = rte_lcore_id();
-    assert(LCORE_ID_ANY != cid);
 
     for (i = 0; i < lcore_conf[lcore2index[cid]].nports; i++) {
         pid = lcore_conf[lcore2index[cid]].pqs[i].id;
@@ -3068,7 +3066,6 @@ static void kni_ingress_flow_process(void)
     struct netif_queue_conf *qconf;
 
     cid = rte_lcore_id(); // kni worker
-    assert(LCORE_ID_ANY != cid);
 
     for (i = 0; i < lcore_conf[lcore2index[cid]].nports; i++) {
         pid = lcore_conf[lcore2index[cid]].pqs[i].id;

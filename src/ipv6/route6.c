@@ -335,7 +335,7 @@ static int rt6_msg_process_cb(struct dpvs_msg *msg)
 {
     struct dp_vs_route6_conf *cf;
 
-    assert(msg && msg->data);
+    assert(msg);
     if (msg->len != sizeof(struct dp_vs_route6_conf)) {
         RTE_LOG(WARNING, RT6, "%s: invalid route6 msg!\n", __func__);
         return EDPVS_INVAL;

@@ -209,7 +209,7 @@ int sa_pool_create(struct inet_ifaddr *ifa, uint16_t low, uint16_t high)
     low = low ? : DEF_MIN_PORT;
     high = high ? : DEF_MAX_PORT;
 
-    if (!ifa || low > high || low == 0 || high >= MAX_PORT) {
+    if (!ifa || low > high || low == 0) {
         RTE_LOG(ERR, SAPOOL, "%s: bad arguments\n", __func__);
         return EDPVS_INVAL;
     }
@@ -402,7 +402,7 @@ static inline int sa_pool_release(struct sa_entry_pool *pool,
         port = ntohs(sin6->sin6_port);
     else
         return EDPVS_NOTSUPP;
-    assert(port > 0 && port < MAX_PORT);
+    assert(port > 0);
 
     /* it's too slow to traverse the used_enties list
      * (by list_for_each_entry_safe) to find the @entry
